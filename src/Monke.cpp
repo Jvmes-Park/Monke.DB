@@ -1,10 +1,9 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <array>
-#include <iterator>
-#include "helper.hpp"
+#include <cctype>
 #include "commands.hpp"
+#include "compile.hpp"
 using namespace std;
 
 #define MAX_COMMAND_SIZE 100
@@ -14,16 +13,27 @@ void indent() {
 	cout<<">> ";
 }
 
-void start() {
-	indent();
-	char command[MAX_COMMAND_SIZE];
-	cin.getline (command, MAX_COMMAND_SIZE);
-	string cmd = strip(command);
-	if (cmd == ".help") {
-		cout<<"[to be completed]"<<endl;
-	}
-	else if (cmd == ".exit") {
-		exit(EXIT_SUCCESS);
+string strip(string input) {
+	input.erase(remove(input.begin(), input.end(), ' '), input.end());
+	return input;
+}
+
+void run() {
+	for (;;) {
+		indent();
+		char command[MAX_COMMAND_SIZE];
+		cin.getline (command, MAX_COMMAND_SIZE);
+		int size = strlen(command);
+		for (int i = 0; i < size; i++) {
+			command[i] = tolower(command[i]);
+		}	
+		compile(command);
+		//if (command[0] == '.') {
+		//	meta_commands(command);
+		//}
+		//else {
+		//	operation_commands(command);
+		//}
 	}
 }
 
@@ -32,16 +42,17 @@ void prompt() {
 	cout<<"Version : 1.0"<<endl;
 	cout<<"Type '.help' for more info\n"<<endl;
 	cout<<"Password: ";
+
 	char password_input[MAX_PASSWORD_SIZE];
 	cin.getline (password_input, MAX_PASSWORD_SIZE);
 	string password = strip(password_input);
-	if (password == "jdp") {
-		start();
+
+	if (password == "placeholder") {
+		run();
 	}
 	else {
 		cout<<"error: Password authentication failed"<<endl;
 	}
-	//To be completed
 }
 
 int main() {
