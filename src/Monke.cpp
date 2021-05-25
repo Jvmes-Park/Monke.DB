@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <string>
 #include <cctype>
-#include "commands.hpp"
-#include "compile.hpp"
+#include <vector>
+#include "tokenizer.hpp"
 using namespace std;
 
 #define MAX_COMMAND_SIZE 100
@@ -21,13 +21,16 @@ string strip(string input) {
 void run() {
 	for (;;) {
 		indent();
-		char command[MAX_COMMAND_SIZE];
-		cin.getline (command, MAX_COMMAND_SIZE);
-		int size = strlen(command);
-		for (int i = 0; i < size; i++) {
-			command[i] = tolower(command[i]);
-		}	
-		compile(command);
+		string command;
+		getline (cin, command);
+		vector<string> tokens;
+		tokenize(command, tokens, ' ');
+		if (command[0] == '.') {
+			meta_commands(tokens);
+		}
+		else {
+			operation_commands(tokens);
+		}
 		//if (command[0] == '.') {
 		//	meta_commands(command);
 		//}
