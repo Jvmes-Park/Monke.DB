@@ -3,7 +3,8 @@
 #include <string>
 #include <cctype>
 #include <vector>
-#include "tokenizer.hpp"
+#include :../compiler/commands.hpp"
+#include "../compiler/tokenizer.hpp"
 using namespace std;
 
 #define MAX_COMMAND_SIZE 100
