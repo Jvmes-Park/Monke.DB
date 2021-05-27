@@ -60,5 +60,6 @@ void prompt() {
 }
 
 int main() {
+	system("cls");
 	prompt();
 }
