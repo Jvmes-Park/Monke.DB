@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 class BTreeNode {
 	int *keys;
 	int t;
@@ -33,7 +36,7 @@ class BTree {
 	void insert(int k);
 };
 
-BtreeNode::BTreeNode(int _t, bool _leaf) {
+BTreeNode::BTreeNode(int _t, bool _leaf) {
 	t = _t;
 	leaf = _leaf;
 	keys = new int[2*t-1];
@@ -42,10 +45,11 @@ BtreeNode::BTreeNode(int _t, bool _leaf) {
 }
 
 void BTreeNode::traverse() {
-	for (int i = 0; i < n; i++) {
+	int i = 0;
+	for (i = 0; i < n; i++) {
 		if (leaf == false)
 			C[i] -> traverse();
-		cout << " " << keys[i];
+		cout << " " << keys[i]<<endl;
 	}
 	if (leaf == false)
 		C[i] -> traverse();
@@ -65,17 +69,17 @@ BTreeNode *BTreeNode::search(int k) {
 void BTree::insert(int k) {
 	if (root == NULL) {
 		root = new BTreeNode(t, true);
-		root -> kets[0] = k;
+		root -> keys[0] = k;
 		root -> n = 1;
 	}
 	else {
 		if (root -> n == 2*t - 1) {
 			BTreeNode *s = new BTreeNode(t, false);
-			s -> c[0] = root;
+			s -> C[0] = root;
 			s -> splitChild(0, root);
 			int i = 0;
 			if (s -> keys[0] < k)
-				i++
+				i++;
 			s -> C[i] -> insertNonFull(k);
 			root = s;
 		}
@@ -88,7 +92,7 @@ void BTree::insert(int k) {
 void BTreeNode::insertNonFull(int k) {
 	int i = n - 1;
 	if (leaf == true) {
-		while (i >= 0 && kets[i] > k) {
+		while (i >= 0 && keys[i] > k) {
 			keys[i + 1] = keys[i];
 			i--;
 		}
@@ -108,7 +112,7 @@ void BTreeNode::insertNonFull(int k) {
 }
 
 void BTreeNode::splitChild(int i, BTreeNode *y) {
-	BTreeNode *z = new BTreenNode(y -> t, y -> leaf);
+	BTreeNode *z = new BTreeNode(y -> t, y -> leaf);
 	z -> n = t - 1;
 	for (int j = 0; i < t - 1; j++) 
 		z -> keys[j] = y -> keys[j+t];
@@ -122,7 +126,7 @@ void BTreeNode::splitChild(int i, BTreeNode *y) {
 	C[i+1] = z;
 	for (int j = n - 1; j >= i; j--)
 		keys[j + 1] = keys[j];
-	keys[i] = y -> leys[t - 1];
+	keys[i] = y -> keys[t - 1];
 	n = n + 1;
 }
 

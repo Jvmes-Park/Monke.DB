@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
+#include <stdio.h>
+#include <sstream>
 #include "../backend/b-tree.hpp"
 using namespace std;
 
-Btree t(3);
+BTree t(3);
 
 void meta_commands(vector<string> input) {
 	if (input[0] == ".help") {
@@ -22,7 +24,11 @@ void operation_commands(vector<string> input) {
 		cout<<"Create function"<<endl;
 	}
 	else if (input[0] == "insert") {
-		t.insert(input[1]);
+		string s = input[1];
+		stringstream num(s);
+		int x = 0;
+		num >> x;
+		t.insert(x);
 	}
 	else if (input[0] == "display") {
 		cout<<"Table: "<<endl;
