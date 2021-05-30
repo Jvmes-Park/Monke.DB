@@ -32,12 +32,6 @@ void run() {
 		else {
 			operation_commands(tokens);
 		}
-		//if (command[0] == '.') {
-		//	meta_commands(command);
-		//}
-		//else {
-		//	operation_commands(command);
-		//}
 	}
 }
 

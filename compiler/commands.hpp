@@ -9,7 +9,8 @@ BTree t(3);
 
 void meta_commands(vector<string> input) {
 	if (input[0] == ".help") {
-		cout <<"[to be completed]"<<endl;
+		cout<<".exit	exit the REPL"<<endl;
+		cout<<"..."<<endl;
 	}
 	else if (input[0] == ".exit") {
 		exit(EXIT_SUCCESS);
@@ -21,7 +22,17 @@ void meta_commands(vector<string> input) {
 
 void operation_commands(vector<string> input) {
 	if (input[0] == "create") {
-		cout<<"Create function"<<endl;
+		if (input[1] == "database") {
+			string db_name = input[2];
+			cout<<"Function to create: " + db_name<<endl;
+		}
+		else if (input[1] == "table") {
+			string tb_name = input[2];
+			cout<<"Function to create: "+tb_name<<endl;
+		}
+		else {
+			cout<<"Error: Syntax error"<<endl;
+		}
 	}
 	else if (input[0] == "insert") {
 		string s = input[1];

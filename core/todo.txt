@@ -1,0 +1,4 @@
+TO DO:
+
+create a lowercase function in main for the inputs.
+Create a better tokenizer, most likely with a scanner.
