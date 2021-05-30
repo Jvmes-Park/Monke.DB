@@ -6,15 +6,14 @@
 void compile(const char* command) {
 	initScanner(command);
 	int line = 1;
-	vector<int>inputs;
 	for (;;) {
 	      Token token = scanToken();
 		if (token.line != line) {
-			cout<<token.line<<endl;
+			printf("$4d ", token.line);
 			line - token.line;
 		}
 		else {
-			cout<<"    | "<<endl;
+			printf("    | ");
 		}
 		printf("%2d '%.*s'\n", token.type, token.length, token.start);
 		if (token.type == T_EOF) break;

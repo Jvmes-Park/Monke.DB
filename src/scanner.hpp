@@ -47,7 +47,6 @@ static Token makeToken(TokenType type) {
 	token.length = (int)(scanner.current - scanner.start);
 	token.line = scanner.line;
 	return token;
-	cout <<token.type<<endl;
 }
 
 static Token errorToken(const char* message) {
@@ -86,9 +85,7 @@ static Token String() {
 static TokenType checkKeyword(int start, int length, const char* rest, TokenType type) {
 	if (scanner.current - scanner.start == start + length && memcmp(scanner.start + start, rest, length) == 0) {
 		return type;
-		cout <<"type: " + type<<endl;
 	}
-	cout<<"identifier: " + T_IDENTIFIER<<endl;
 	return T_IDENTIFIER;
 }
 

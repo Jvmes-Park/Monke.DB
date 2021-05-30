@@ -22,18 +22,15 @@ string strip(string input) {
 
 void run() {
 	for (;;) {
-		indent();
-		//TO DO: We need char command not string.
-		string command;
-		getline (cin, command);
-		vector<string> tokens;
-		compile(command);
-		//tokenize(command, tokens, ' ');
-		//if (command[0] == '.') {
-		//	meta_commands(tokens);
-		//}
-		//else {
-		//	operation_commands(tokens);
+		char command[100];
+		for (;;) {
+			indent();
+			if (!fgets(command, sizeof(command), stdin)) {
+				cout<<"\n";
+				break;
+			}
+			compile(command);
+		}
 	}
 }
 
