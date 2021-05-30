@@ -3,6 +3,7 @@
 #include <string>
 #include <cctype>
 #include <vector>
+#include "../src/compile.hpp"
 #include "../compiler/commands.hpp"
 #include "../compiler/tokenizer.hpp"
 using namespace std;
@@ -22,16 +23,17 @@ string strip(string input) {
 void run() {
 	for (;;) {
 		indent();
+		//TO DO: We need char command not string.
 		string command;
 		getline (cin, command);
 		vector<string> tokens;
-		tokenize(command, tokens, ' ');
-		if (command[0] == '.') {
-			meta_commands(tokens);
-		}
-		else {
-			operation_commands(tokens);
-		}
+		compile(command);
+		//tokenize(command, tokens, ' ');
+		//if (command[0] == '.') {
+		//	meta_commands(tokens);
+		//}
+		//else {
+		//	operation_commands(tokens);
 	}
 }
 

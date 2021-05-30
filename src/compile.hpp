@@ -2,7 +2,6 @@
 #include <vector>
 #include <string.h>
 #include "scanner.hpp"
-#include "commands.hpp"
 
 void compile(const char* command) {
 	initScanner(command);
@@ -10,18 +9,14 @@ void compile(const char* command) {
 	vector<int>inputs;
 	for (;;) {
 	      Token token = scanToken();
-	      //if (token.line != line) {
-	      //   printf("%4d ", token.line);
-      	      //     line = token.line;
-	      //} 	
-		if (token.type == 8) {
-			operation_commands("create");
+		if (token.line != line) {
+			cout<<token.line<<endl;
+			line - token.line;
 		}
-	      else {
-	               printf("   | ");
-	      }
-              printf("%2d '%.*s'\n", token.type, token.length, token.start); 
-	      inputs.push_back(token.type);
-	      if (token.type == TOKEN_EOF) break;
+		else {
+			cout<<"    | "<<endl;
+		}
+		printf("%2d '%.*s'\n", token.type, token.length, token.start);
+		if (token.type == T_EOF) break;
 	}
 }

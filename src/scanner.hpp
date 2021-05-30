@@ -5,14 +5,14 @@
 using namespace std;
 
 typedef enum {
-	LEFT_PAREN, RIGHT_PAREN, SEMI_COLON,
-	COMMA, DOT, STAR, EQUAL, SLASH, 
+	T_LEFT_PAREN, T_RIGHT_PAREN, T_SEMI_COLON,
+	T_COMMA, T_DOT, T_STAR, T_EQUAL, T_SLASH, 
 
-	CREATE, INSERT, DELETE, DISPLAY, HELP, EXIT,
+	T_CREATE, T_INSERT, T_DELETE, T_DISPLAY, T_HELP, T_EXIT,
 
-	IDENTIFIER, STRING, NUMBER,
+	T_IDENTIFIER, T_STRING, T_NUMBER,
 
-	TOKEN_ERROR, TOKEN_EOF
+	T_ERROR, T_EOF
 } TokenType;
 
 typedef struct {
@@ -52,7 +52,7 @@ static Token makeToken(TokenType type) {
 
 static Token errorToken(const char* message) {
 	Token token;
-	token.type = TOKEN_ERROR;
+	token.type = T_ERROR;
 	token.start = message;
 	token.length = (int)strlen(message);
 	token.line = scanner.line;
@@ -80,7 +80,7 @@ static Token String() {
 	}
 	if (isAtEnd()) return errorToken("Unterminated string");
 	advance();
-	return makeToken(STRING);
+	return makeToken(T_STRING);
 }
 
 static TokenType checkKeyword(int start, int length, const char* rest, TokenType type) {
@@ -88,32 +88,32 @@ static TokenType checkKeyword(int start, int length, const char* rest, TokenType
 		return type;
 		cout <<"type: " + type<<endl;
 	}
-	cout<<"identifier: " + IDENTIFIER<<endl;
-	return IDENTIFIER;
+	cout<<"identifier: " + T_IDENTIFIER<<endl;
+	return T_IDENTIFIER;
 }
 
 static TokenType identifierType() {
 	switch (scanner.start[0]) {
-		case 'c': return checkKeyword(1, 5, "reate", CREATE);
-		case 'i': return checkKeyword(1, 5, "nsert", INSERT);
+		case 'c': return checkKeyword(1, 5, "reate", T_CREATE);
+		case 'i': return checkKeyword(1, 5, "nsert", T_INSERT);
 		case 'd': 
 			if (scanner.current - scanner.start > 1) {
 				switch(scanner.start[1]) {
-					case 'e': return checkKeyword(2, 4, "lete", DELETE);
-					case 'i': return checkKeyword(2, 4, "play", DISPLAY);
+					case 'e': return checkKeyword(2, 4, "lete", T_DELETE);
+					case 'i': return checkKeyword(2, 4, "play", T_DISPLAY);
 				}
 			}
 			break;
 		case '.': 
 			if (scanner.current - scanner.start > 1) {
 				switch(scanner.start[1]) {
-					case 'h': return checkKeyword(2, 3, "elp", HELP);
-					case 'e': return checkKeyword(2, 3, "xit", EXIT);
+					case 'h': return checkKeyword(2, 3, "elp", T_HELP);
+					case 'e': return checkKeyword(2, 3, "xit", T_EXIT);
 				}
 			}
 			break;
 	}
-	return IDENTIFIER;
+	return T_IDENTIFIER;
 }
 
 static bool isDigit(char c) {
@@ -135,7 +135,7 @@ static Token number() {
 		advance();
 	}
 	while (isDigit(peek())) advance();
-	return makeToken(NUMBER);
+	return makeToken(T_NUMBER);
 }
 
 static void skipWhitespace() {
@@ -155,19 +155,19 @@ Token scanToken() {
 	skipWhitespace();
 	scanner.start = scanner.current;
 	if (isAtEnd()) 
-		return makeToken(TOKEN_EOF);
+		return makeToken(T_EOF);
 	char c = advance();
 	if (isAlpha(c)) return identifier();
 	if (isDigit(c)) return number();
 	switch(c) {
-		case '(': return makeToken(LEFT_PAREN);
-		case ')': return makeToken(RIGHT_PAREN);
-		case ',': return makeToken(COMMA);
-		case '.': return makeToken(DOT);
-		case '/': return makeToken(SLASH);
-		case ';': return makeToken(SEMI_COLON);
-		case '=': return makeToken(EQUAL);
-		case '*': return makeToken(STAR);
+		case '(': return makeToken(T_LEFT_PAREN);
+		case ')': return makeToken(T_RIGHT_PAREN);
+		case ',': return makeToken(T_COMMA);
+		case '.': return makeToken(T_DOT);
+		case '/': return makeToken(T_SLASH);
+		case ';': return makeToken(T_SEMI_COLON);
+		case '=': return makeToken(T_EQUAL);
+		case '*': return makeToken(T_STAR);
 		case '"': return String();
 	}
 	return errorToken("Unexpected character.");
